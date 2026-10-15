@@ -6,13 +6,13 @@ import { FADE_UP, STAGGER_CHILDREN } from "@/lib/motion";
 import { SectionHead } from "@/components/sections/SectionHead";
 import styles from "./sections.module.css";
 
-/** Track 06 — the working agreement: what I take, what I deliver. */
+/** Scene 05 — the pitch: what you bring to the table, what ships. */
 export function Deliverables() {
   const { deliverables } = portfolio;
 
   return (
-    <section id="deliverables" className="section-shell" aria-labelledby="deliverables-heading">
-      <SectionHead index="06" title="In the Studio" id="deliverables-heading" />
+    <section id="pitch" className="section-shell" aria-labelledby="pitch-heading">
+      <SectionHead index="05" title="The Pitch" id="pitch-heading" />
 
       <motion.div
         className={styles.exchangeList}
@@ -21,8 +21,13 @@ export function Deliverables() {
         viewport={{ once: true, margin: "-10%" }}
         variants={STAGGER_CHILDREN}
       >
-        {deliverables.map((exchange) => (
-          <motion.div key={exchange.take} className={styles.exchange} variants={FADE_UP}>
+        {deliverables.map((exchange, index) => (
+          <motion.div
+            key={exchange.take}
+            id={`del-${["plan", "ui", "refactor", "api", "launch"][index] ?? index}`}
+            className={styles.exchange}
+            variants={FADE_UP}
+          >
             <p className={styles.exchangeTake}>{exchange.take}</p>
             <span className={styles.exchangeArrow} aria-hidden="true">
               ──▶

@@ -1,0 +1,41 @@
+.strip {
+  overflow: clip;
+  border-block: 1px solid var(--line);
+  padding: 0.8rem 0;
+  background: var(--bg-raised);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: slide var(--marquee-speed) linear infinite;
+}
+
+.track[data-reverse="true"] {
+  animation-direction: reverse;
+}
+
+.chunk {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1rem + 2vw, 2.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding-right: 1rem;
+  color: var(--text);
+}
+
+.strip[data-gold="true"] .chunk {
+  color: var(--gold);
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}

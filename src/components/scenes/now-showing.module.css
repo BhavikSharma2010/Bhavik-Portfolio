@@ -1,0 +1,161 @@
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  align-items: center;
+  padding: clamp(2.5rem, 2rem + 3vw, 4.5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row[data-even="true"] {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.row[data-even="true"] .posterWrap {
+  order: 2;
+}
+
+/* ── poster panel: gradient art, no image assets ─────────── */
+
+.posterWrap {
+  perspective: 800px;
+}
+
+.poster {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.2rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  will-change: transform;
+}
+
+.posterTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 3rem);
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--text);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.posterYear {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  letter-spacing: 0.2em;
+  color: rgba(244, 239, 230, 0.75);
+}
+
+/* six poster palettes — red / gold / bone washes over black */
+.poster1 {
+  background: linear-gradient(160deg, #e63946 0%, #7a1620 45%, #140b0c 100%);
+}
+
+.poster2 {
+  background: linear-gradient(200deg, #f0b429 0%, #8a5f0d 45%, #14100a 100%);
+}
+
+.poster3 {
+  background: linear-gradient(150deg, #f4efe6 0%, #8f887a 40%, #141310 100%);
+}
+
+.poster3 .posterTitle {
+  color: #171512;
+}
+
+.poster3 .posterYear {
+  color: rgba(23, 21, 18, 0.7);
+}
+
+.poster4 {
+  background: linear-gradient(215deg, #ff5a66 0%, #43111a 50%, #0d0708 100%);
+}
+
+.poster5 {
+  background: linear-gradient(145deg, #d97e2b 0%, #6e3a10 45%, #120c07 100%);
+}
+
+.poster6 {
+  background: linear-gradient(205deg, #9c2b48 0%, #3d1220 50%, #0d0709 100%);
+}
+
+/* ── details column ──────────────────────────────────────── */
+
+.slate {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+
+.filmTitle {
+  font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem);
+  margin-bottom: 1rem;
+}
+
+.synopsis {
+  color: var(--text-dim);
+  max-width: 34rem;
+  margin-bottom: 1.4rem;
+}
+
+.genres {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.genre {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+}
+
+.links {
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.privateReel {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 0.6rem 1rem;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 800px) {
+  .row,
+  .row[data-even="true"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .row[data-even="true"] .posterWrap {
+    order: 0;
+  }
+
+  .poster {
+    aspect-ratio: 16 / 10;
+  }
+}

@@ -7,21 +7,25 @@ import { EASE_OUT_EXPO } from "@/lib/motion";
 import { SectionHead } from "@/components/sections/SectionHead";
 import styles from "./sections.module.css";
 
-/** Track 05 — career history as a tour setlist. Rows expand like liner notes. */
+/** Scene 04 — the press tour: every venue, every release window. */
 export function Experience() {
   const { experience } = portfolio;
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="experience" className="section-shell" aria-labelledby="experience-heading">
-      <SectionHead index="05" title="Tour History" id="experience-heading" />
+    <section id="press" className="section-shell" aria-labelledby="press-heading">
+      <SectionHead index="04" title="Press Tour" id="press-heading" />
 
       <div className={styles.tracklist}>
         {experience.map((item, index) => {
           const isOpen = index === openIndex;
           const panelId = `experience-panel-${index}`;
           return (
-            <div key={`${item.company}-${item.role}`} className={styles.trackRow}>
+            <div
+              key={`${item.company}-${item.role}`}
+              id={`exp-${["freelance", "startup", "origin"][index] ?? index}`}
+              className={styles.trackRow}
+            >
               <button
                 type="button"
                 className={styles.trackRowHead}

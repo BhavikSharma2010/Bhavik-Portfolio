@@ -9,7 +9,7 @@ interface SectionHeadProps {
   id: string;
 }
 
-/** Shared section header: track number + big display title. */
+/** Film slate header: red SCENE marker + big Anton title. */
 export function SectionHead({ index, title, id }: SectionHeadProps) {
   return (
     <motion.header
@@ -19,7 +19,7 @@ export function SectionHead({ index, title, id }: SectionHeadProps) {
       viewport={{ once: true, margin: "-15%" }}
     >
       <motion.span className="section-index" variants={FADE_UP}>
-        {index} /
+        SCENE {index} · TAKE 01
       </motion.span>
       <motion.h2 className="section-title" variants={FADE_UP} id={id}>
         {title}

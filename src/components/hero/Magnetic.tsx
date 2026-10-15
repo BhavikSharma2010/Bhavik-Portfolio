@@ -2,7 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
-import styles from "@/components/sections/hero.module.css";
+import styles from "@/components/hero/magnetic.module.css";
 
 const MAX_PULL_X = 9;
 const MAX_PULL_Y = 7;

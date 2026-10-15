@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Syne } from "next/font/google";
+import { Anton, Inter, JetBrains_Mono } from "next/font/google";
+import { AppLoader } from "@/components/AppLoader";
 import "./globals.css";
 
-const syne = Syne({
+const anton = Anton({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-syne",
+  weight: "400",
+  variable: "--font-anton",
   display: "swap",
 });
 
@@ -23,18 +24,18 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bhavik — The Portfolio Album",
+  title: "Bhavik — Bhavik Studios",
   description:
-    "A Spotify-style storytelling portfolio: Bhavik's story, projects, experience and work — played like an album with a 3D avatar.",
+    "Bhavik Studios presents: a software developer's portfolio shot as a feature film — now showing, origin story, cast & crew, and a premiere night invitation.",
   openGraph: {
-    title: "Bhavik — The Portfolio Album",
-    description: "Press play on Bhavik's story — software developer, storyteller.",
+    title: "Bhavik Studios",
+    description: "He builds web experiences that feel alive. Now showing.",
     type: "website",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08080d",
+  themeColor: "#0b0a08",
 };
 
 export default function RootLayout({
@@ -43,8 +44,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${inter.variable} ${jetbrains.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={`${anton.variable} ${inter.variable} ${jetbrains.variable}`}>
+      <body>
+        <AppLoader />
+        {children}
+      </body>
     </html>
   );
 }

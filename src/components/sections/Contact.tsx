@@ -5,13 +5,14 @@ import { portfolio } from "@/content/portfolio";
 import { FADE_UP, STAGGER_CHILDREN } from "@/lib/motion";
 import styles from "./sections.module.css";
 
-/** Track 07 — encore. The big CTA and the credits roll. */
+/** Scene 06 — premiere night: the invite, the afterparty, the credits. */
 export function Contact() {
   const { contact, profile } = portfolio;
 
   return (
-    <section id="contact" className="section-shell" aria-labelledby="contact-heading">
+    <section id="premiere" className="section-shell" aria-labelledby="premiere-heading">
       <motion.div
+        id="contact-encore"
         className={styles.encore}
         initial="hidden"
         whileInView="visible"
@@ -19,10 +20,10 @@ export function Contact() {
         variants={STAGGER_CHILDREN}
       >
         <motion.p className="kicker" variants={FADE_UP}>
-          07 / Bonus track
+          Scene 06 · You're invited
         </motion.p>
 
-        <motion.h2 className={styles.encoreTitle} variants={FADE_UP} id="contact-heading">
+        <motion.h2 className={styles.encoreTitle} variants={FADE_UP} id="premiere-heading">
           {contact.heading}
         </motion.h2>
 
@@ -32,10 +33,13 @@ export function Contact() {
 
         <motion.div className={styles.encoreActions} variants={FADE_UP}>
           <a className="btn btn-primary" href={`mailto:${profile.email}`}>
-            Drop a message
+            RSVP by email
+          </a>
+          <a className="btn btn-ghost" href={`tel:${profile.phone.replace(/\s/g, "")}`}>
+            Call the studio
           </a>
           <a className="btn btn-ghost" href={profile.resumeUrl}>
-            Download resume
+            Read the treatment
           </a>
         </motion.div>
 
@@ -54,7 +58,7 @@ export function Contact() {
         </motion.div>
 
         <motion.p className={styles.credits} variants={FADE_UP}>
-          Recorded &amp; mixed by {profile.name} · Pressed on the open web · {new Date().getFullYear()}
+          Written &amp; directed by {profile.name} · Shot on Next.js · © {new Date().getFullYear()} Bhavik Studios
         </motion.p>
       </motion.div>
     </section>

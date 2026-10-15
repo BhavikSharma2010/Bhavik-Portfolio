@@ -1,0 +1,109 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: clip;
+}
+
+/* projector glow drifting behind the title */
+.glow {
+  position: absolute;
+  inset: -20% -10%;
+  background:
+    radial-gradient(48% 42% at 68% 30%, rgba(230, 57, 70, 0.14), transparent 70%),
+    radial-gradient(40% 36% at 24% 72%, rgba(240, 180, 41, 0.07), transparent 70%);
+  pointer-events: none;
+}
+
+.letterboxTop,
+.letterboxBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: clamp(20px, 6vh, 64px);
+  background: #000;
+  z-index: 5;
+  transform-origin: top;
+}
+
+.letterboxTop {
+  top: 0;
+}
+
+.letterboxBottom {
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: calc(var(--topbar-h) + 2rem) var(--gutter) 4rem;
+  max-width: 100%;
+}
+
+.title {
+  font-size: var(--text-hero);
+  letter-spacing: 0.02em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.letter {
+  display: inline-block;
+  will-change: transform;
+}
+
+.roles {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.tagline {
+  max-width: 38rem;
+  color: var(--text-dim);
+}
+
+.cue {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.cueLine {
+  width: 72px;
+  height: 1px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: cueSweep 2.2s var(--ease-out-expo) infinite;
+}
+
+@keyframes cueSweep {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+
+  70% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}

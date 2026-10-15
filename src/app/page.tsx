@@ -1,34 +1,37 @@
-import { SceneBackground } from "@/components/SceneBackground";
-import { SmoothScroll } from "@/components/SmoothScroll";
-import { AppLoader } from "@/components/AppLoader";
-import { TrackNav } from "@/components/TrackNav";
-import { PlayerBar } from "@/components/PlayerBar";
-import { Hero } from "@/components/sections/Hero";
+import { TopNav } from "@/components/chrome/TopNav";
+import { ScrollProgress } from "@/components/chrome/ScrollProgress";
+import { Hero } from "@/components/scenes/Hero";
+import { Marquee } from "@/components/scenes/Marquee";
+import { NowShowing } from "@/components/scenes/NowShowing";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
-import { Projects } from "@/components/sections/Projects";
 import { Experience } from "@/components/sections/Experience";
 import { Deliverables } from "@/components/sections/Deliverables";
 import { Contact } from "@/components/sections/Contact";
 
+/** Bhavik Studios — one continuous feature presentation. */
 export default function Page() {
   return (
     <>
-      <SceneBackground />
-      <AppLoader />
-      <SmoothScroll>
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Experience />
-          <Deliverables />
-          <Contact />
-        </main>
-      </SmoothScroll>
-      <TrackNav />
-      <PlayerBar />
+      <ScrollProgress />
+      <TopNav />
+      <main>
+        <Hero />
+        <Marquee
+          items={["Now Showing", "4 Films", "One Night Only", "Rated S — Seriously Serious Code"]}
+        />
+        <NowShowing />
+        <About />
+        <Skills />
+        <Experience />
+        <Marquee
+          items={["The Pitch", "You Bring The Idea", "I Bring The Film", "Every Time"]}
+          reverse
+          gold
+        />
+        <Deliverables />
+        <Contact />
+      </main>
     </>
   );
 }
