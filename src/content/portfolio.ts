@@ -1,16 +1,8 @@
 /**
  * ⭐ SINGLE SOURCE OF TRUTH for all site content.
- * Swap the demo data below for real data — every section,
- * the tracklist, and the player bar read from this file.
+ * Swap the data below for your own — every scene reads from this file.
+ * Data sourced from Bhavik Sharma's CV (latest, updated).
  */
-
-export interface Track {
-  id: string;
-  number: string;
-  title: string;
-  /** Playful duration shown Spotify-style in the tracklist */
-  duration: string;
-}
 
 export interface Project {
   title: string;
@@ -19,8 +11,10 @@ export interface Project {
   year: string;
   link: string;
   repo?: string;
-  /** Which generated cover palette to use: 1 | 2 | 3 */
-  cover: 1 | 2 | 3;
+  /** Which poster palette to use: 1 | 2 | 3 | 4 | 5 | 6 */
+  cover: 1 | 2 | 3 | 4 | 5 | 6;
+  /** Playful film runtime shown on the poster slate */
+  runtime: string;
 }
 
 export interface ExperienceItem {
@@ -34,6 +28,8 @@ export interface ExperienceItem {
 export interface SkillGroup {
   name: string;
   skills: string[];
+  /** Featured cast: skill name -> short tagline shown on the wide "starring" card. */
+  featured?: Record<string, string>;
 }
 
 export interface Exchange {
@@ -48,6 +44,7 @@ export interface Portfolio {
     tagline: string;
     location: string;
     email: string;
+    phone: string;
     resumeUrl: string;
     socials: { label: string; url: string }[];
   };
@@ -67,173 +64,145 @@ export interface Portfolio {
   };
 }
 
-export const tracks: Track[] = [
-  { id: "intro", number: "01", title: "Intro — Press Play", duration: "0:38" },
-  { id: "about", number: "02", title: "Liner Notes (About Me)", duration: "3:12" },
-  { id: "skills", number: "03", title: "Liked Sounds (Skills)", duration: "2:47" },
-  { id: "projects", number: "04", title: "The Albums (Projects)", duration: "8:56" },
-  { id: "experience", number: "05", title: "Tour History (Experience)", duration: "5:04" },
-  { id: "deliverables", number: "06", title: "In the Studio (What I Do)", duration: "4:21" },
-  { id: "contact", number: "07", title: "Encore (Contact)", duration: "∞" },
-];
-
 export const portfolio: Portfolio = {
   profile: {
-    name: "Bhavik",
-    roles: ["Software Developer", "Problem Solver", "Storyteller"],
+    name: "Bhavik Sharma",
+    roles: ["Frontend Developer", "React.js Developer", "Storyteller"],
     tagline:
-      "I build web experiences that feel alive — and I believe a portfolio should prove it, not just say it. So here's my story, played like an album.",
-    location: "India · Remote-friendly",
-    email: "hello@bhavik.dev",
-    resumeUrl: "#",
+      "I build clean, easy-to-use web applications with React.js — and I believe a portfolio should prove it, not just say it. So here's my story, shot like a film.",
+    location: "Nagpur, India",
+    email: "bhaviksharma260@gmail.com",
+    phone: "+91 8668607671",
+    resumeUrl: "/bhavik-sharma-cv.pdf",
     socials: [
-      { label: "GitHub", url: "https://github.com/bhavik" },
-      { label: "LinkedIn", url: "https://linkedin.com/in/bhavik" },
-      { label: "X / Twitter", url: "https://x.com/bhavik" },
+      { label: "GitHub", url: "https://github.com/BhavikSharma2010" },
+      { label: "LinkedIn", url: "https://www.linkedin.com/in/bhaviksharma260/" },
     ],
   },
   about: {
-    heading: "The story behind the sound",
+    heading: "The story behind the screen",
     paragraphs: [
-      "I'm Bhavik — a software developer who fell into code through curiosity and stayed for the craft. What started with tinkering on small scripts turned into building real products used by real people.",
-      "I care about the details most people scroll past: the 200ms transition that makes a button feel expensive, the empty state that makes a user smile, the query that goes from 4 seconds to 40 milliseconds. Good software is felt before it's understood.",
-      "Outside the editor you'll find me lost in music, exploring design, and turning random ideas into weekend builds — some of which sneak into the projects below.",
+      "I'm Bhavik Sharma — a frontend developer from Nagpur, India, skilled in React.js and modern JavaScript, and currently levelling up my TypeScript. I care about writing clean code and building web apps that are genuinely easy to use.",
+      "I'm currently shooting my first production scenes as a Software Developer Intern at AmbuFast, where I build reusable React components for healthcare applications and ship features that real users depend on.",
+      "Off set, I'm finishing my Bachelor of Computer Applications at G H Raisoni University (2023–2026), and turning ideas into personal films — voice-controlled tools, management dashboards, and privacy-first apps.",
     ],
     stats: [
-      { value: "3+", label: "years writing code" },
-      { value: "20+", label: "projects shipped" },
-      { value: "10k+", label: "lines deleted (proudly)" },
-      { value: "∞", label: "lo-fi hours" },
+      { value: "3", label: "years writing code" },
+      { value: "3", label: "films shipped" },
+      { value: "1", label: "studio internship" },
+      { value: "∞", label: "midnight builds" },
     ],
   },
   skills: [
     {
       name: "Frontend",
-      skills: ["React", "Next.js", "TypeScript", "Three.js / R3F", "Tailwind", "Framer Motion"],
+      skills: ["React.js", "HTML5", "CSS3", "Tailwind CSS", "Responsive Design"],
+      featured: {
+        "React.js": "The leading role — component architecture, hooks and performance.",
+        "Tailwind CSS": "Design systems at utility-belt speed.",
+      },
     },
     {
-      name: "Backend",
-      skills: ["Node.js", "Express", "REST APIs", "PostgreSQL", "MongoDB", "Prisma"],
+      name: "Languages",
+      skills: ["JavaScript (ES6+)", "TypeScript"],
+      featured: {
+        "TypeScript": "Types that keep every scene in focus.",
+      },
     },
     {
-      name: "Tools & Craft",
-      skills: ["Git", "Docker", "Vercel", "Figma", "CI/CD", "Testing"],
+      name: "Backend & Databases",
+      skills: ["Node.js", "REST APIs", "MongoDB", "Supabase", "PostgreSQL"],
+      featured: {
+        "Node.js": "The engine room — servers, APIs and realtime backends.",
+      },
     },
     {
-      name: "Currently Spinning",
-      skills: ["WebGL shaders", "Rust", "AI integrations"],
+      name: "Tools & AI",
+      skills: ["Git", "GitHub", "VS Code", "Cursor", "Netlify", "Vercel", "Claude Code", "Generative AI", "Prompt Engineering"],
+      featured: {
+        "Claude Code": "AI pair-programmer on the call sheet, every single day.",
+        "Generative AI": "Directing models to ship real product work.",
+      },
     },
   ],
   projects: [
     {
-      title: "Wavelength",
+      title: "Prachlit Consulting",
       description:
-        "A real-time collaborative music queue where friends vote on what plays next. WebSockets, optimistic UI, and a draggable player that syncs across devices.",
-      tags: ["Next.js", "WebSockets", "PostgreSQL"],
+        "A production website for a Gurgaon technology-consulting firm serving enterprises like Adani ConneX and Times of India — unified communications, cloud, security and energy solutions. Client marquees, a custom admin backend, and every page designed and built end-to-end with Next.js.",
+      tags: ["Next.js", "React.js", "Client Project"],
+      year: "2026",
+      link: "https://www.prachlit.in",
+      cover: 5,
+      runtime: "6 min",
+    },
+    {
+      title: "Virtual Photo Booth",
+      description:
+        "A privacy-first photo booth that never saves your pictures — photos live only in your browser. Dynamic 3-photo strips and 4-photo grids with vintage and B&W filters, wrapped in a clean off-white interface.",
+      tags: ["React.js", "Tailwind CSS", "react-webcam", "LocalStorage"],
+      year: "2026",
+      link: "#",
+      cover: 1,
+      runtime: "4 min",
+    },
+    {
+      title: "Employee Management System",
+      description:
+        "A management dashboard with role-based access control — administrators assign and monitor employee tasks, with full task-status tracking and responsive interfaces built on Tailwind CSS.",
+      tags: ["React.js", "Tailwind CSS", "LocalStorage"],
+      year: "2026",
+      link: "#",
+      cover: 2,
+      runtime: "5 min",
+    },
+    {
+      title: "Voice Command Stopwatch",
+      description:
+        "A stopwatch that listens — hands-free lap control through the Web Speech API, with dark/light themes and MongoDB storing every lap history between sessions.",
+      tags: ["JavaScript", "Web Speech API", "Node.js", "MongoDB"],
       year: "2025",
       link: "#",
-      repo: "#",
-      cover: 1,
-    },
-    {
-      title: "Orbitfolio",
-      description:
-        "An interactive 3D portfolio engine — orbiting project planets, scroll-driven camera moves, and a CMS-less content file. This site's cousin.",
-      tags: ["Three.js", "R3F", "GSAP"],
-      year: "2025",
-      link: "#",
-      repo: "#",
-      cover: 2,
-    },
-    {
-      title: "DevDeck",
-      description:
-        "A command palette for your whole dev life — search repos, issues, docs and snippets from one keystroke. Built with a Rust indexer and a React shell.",
-      tags: ["React", "Rust", "Tauri"],
-      year: "2024",
-      link: "#",
-      repo: "#",
-      cover: 3,
-    },
-    {
-      title: "Pulseboard",
-      description:
-        "Analytics that don't feel like a spreadsheet. Real-time dashboards with animated charts, anomaly flags, and a query builder humans can actually use.",
-      tags: ["Next.js", "tRPC", "ClickHouse"],
-      year: "2024",
-      link: "#",
-      repo: "#",
-      cover: 1,
-    },
-    {
-      title: "Sketchmate",
-      description:
-        "An infinite collaborative whiteboard with crisper-than-crisp canvas rendering, multiplayer cursors, and export that survives contact with real teams.",
-      tags: ["TypeScript", "Canvas API", "CRDTs"],
-      year: "2023",
-      link: "#",
-      repo: "#",
-      cover: 2,
-    },
-    {
-      title: "Midnight Notes",
-      description:
-        "A distraction-free note app with local-first sync, full-text search, and markdown that renders as you type. Your 3am thoughts deserve good tooling.",
-      tags: ["React", "IndexedDB", "PWA"],
-      year: "2023",
-      link: "#",
-      repo: "#",
-      cover: 3,
+      cover: 4,
+      runtime: "3 min",
     },
   ],
   experience: [
     {
-      role: "Software Developer",
-      company: "Freelance / Independent",
-      period: "2024 — Present",
+      role: "Software Developer Intern — Hospital Management System",
+      company: "AmbuFast, Nagpur",
+      period: "Apr 2026 — Present",
       summary:
-        "Designing and shipping full-stack products for clients end to end — from first wireframe to production monitoring.",
+        "Building the frontend of a hospital management platform with reusable React.js components.",
       highlights: [
-        "Shipped 6+ client projects across e-commerce, SaaS and content platforms",
-        "Cut a client's page load from 6s to 1.2s, lifting conversions measurably",
-        "Own the whole stack: architecture, code, deploy, and the 2am pager",
+        "Developed reusable React.js components, improving overall code maintainability",
+        "Built the queue management and laboratory analytics modules",
+        "Collaborated with developers to test, debug, and optimize frontend performance",
       ],
     },
     {
-      role: "Full-Stack Developer Intern",
-      company: "A Product Startup",
-      period: "2023 — 2024",
+      role: "Software Developer Intern — JotFlow",
+      company: "AmbuFast, Nagpur",
+      period: "Apr 2026 — Present",
       summary:
-        "Joined a small product team and learned what 'production' really means — users, deadlines, and code reviews.",
+        "An approval-tracking dashboard that streamlines workflows from submission to sign-off.",
       highlights: [
-        "Built and shipped features used by thousands of daily active users",
-        "Introduced TypeScript to the frontend codebase, halving runtime type bugs",
-        "Wrote the internal component library the team still uses",
-      ],
-    },
-    {
-      role: "The Origin Story",
-      company: "Self-taught",
-      period: "2022 — 2023",
-      summary:
-        "Docs, courses, broken builds at 1am, and a hundred small projects that taught me how software actually fits together.",
-      highlights: [
-        "Went from 'what is a div' to deploying full-stack apps",
-        "Built a habit: ship something small every single week",
-        "Learned to read other people's code — the real superpower",
+        "Built the approval-tracking dashboard with ReactJS, Node.js, and PostgreSQL",
+        "Integrated the Jotform API to automatically sync user form submissions into the platform",
+        "Engineered a real-time tracker managing multi-step approvals from start to completion",
       ],
     },
   ],
   deliverables: [
-    { take: "An idea, a napkin sketch, or just a vibe", deliver: "A scoped plan with real milestones" },
-    { take: "Figma files and a feature brief", deliver: "Pixel-faithful, responsive, animated UI" },
-    { take: "A legacy codebase everyone fears", deliver: "Refactored, typed, tested — with docs" },
-    { take: "An API that needs to scale", deliver: "Typed endpoints, cached queries, clean errors" },
-    { take: "A launch date", deliver: "Shipped on time, monitored, and handed over" },
+    { take: "An idea or a rough feature brief", deliver: "Clean, reusable React.js components" },
+    { take: "A workflow drowning in manual steps", deliver: "A dashboard that tracks it in real time" },
+    { take: "A third-party API to wire in", deliver: "A seamless integration that just works" },
+    { take: "Users on every screen size", deliver: "Responsive interfaces with Tailwind CSS" },
+    { take: "A frontend that feels slow", deliver: "Tested, debugged, and optimized performance" },
   ],
   contact: {
-    heading: "Let's make your favorite track",
+    heading: "Catch the premiere",
     blurb:
-      "Got a project, a role, or just an idea that won't leave you alone? My inbox is always on shuffle — skip the line and drop a message.",
+      "Got a project, a role, or just an idea that won't leave you alone? The studio door is open — email me, call the studio, or find me on GitHub and LinkedIn.",
   },
 };

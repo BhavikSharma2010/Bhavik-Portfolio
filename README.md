@@ -1,10 +1,12 @@
-# Bhavik — The Portfolio Album
+# Bhavik Studios 🎬
 
-A Spotify-style storytelling portfolio: your story, projects, experience and
-work — played like an album, with a 3D avatar, floating vinyl, background
-lo-fi and a persistent player bar whose progress bar is the page scrollbar.
+A cinematic single-page portfolio: software developer Bhavik's story presented
+as a feature film — **Now Showing** (projects as movies), **The Origin Story**,
+**Cast & Crew** (a scrolling credits roll), **Press Tour**, **The Pitch**, and
+**Premiere Night** (contact).
 
-Built with **Next.js 16 · React Three Fiber · drei · Lenis · Framer Motion · Howler**.
+Built with Next.js (App Router) + framer-motion. No Tailwind, no 3D deps —
+just design tokens, CSS Modules and scroll-driven animation.
 
 ## Run it
 
@@ -14,38 +16,20 @@ npm run dev      # http://localhost:3000
 npm run build    # production build
 ```
 
-## 🧑‍🎤 Swap in your real 3D avatar
+## The intro
 
-1. Create your avatar at [readyplayer.me](https://readyplayer.me) (free — takes
-   selfies, customize, download as **.glb**). For animations, rig it with
-   [Mixamo](https://mixamo.com) and export GLB with an **Idle** clip.
-2. Replace `public/avatar/model.glb` with your file. That's it — no code changes.
-   - If your model has an `idle`-named clip it plays automatically; otherwise a
-     gentle procedural sway is used.
-   - If the file is missing or broken, a stylized placeholder figure keeps the
-     scene composed.
-
-## 🎵 Swap the music
-
-Replace `public/audio/lofi.wav` with any audio loop (mp3 works too — update the
-path in `src/components/PlayerBar.tsx`). Music never autoplays; visitors press
-play. The current placeholder was synthesized by `scripts/generate-lofi.mjs`.
-
-## 🖼️ Hero face artwork
-
-The hero background face is **drawn in code** — a procedural wireframe portrait
-in `src/components/hero/HeroFaceArt.tsx` (deterministic SVG, no image assets).
-Want your real face there instead? Export an image to
-`public/hero/avatar-face.jpg` and swap the `<HeroFaceArt />` inside the
-`.faceArt` div in `src/components/sections/Hero.tsx` for
-`<img src="/hero/avatar-face.jpg" alt="" />` — the parallax, mask and scanline
-treatment apply automatically.
+On first visit a film-leader countdown (3-2-1, viewfinder, REC) plays over the
+hero image at `public/intro/hero-face.jpg` — swap that file to change the face.
+It shows **once per browser session** (sessionStorage key
+`bhavik-studios-intro-seen`). Delete that key (or open a fresh session) to
+replay it. If the image is missing, a typographic title card plays instead.
 
 ## ✍️ Swap the content
 
 **Everything on the page — bio, skills, projects, experience, deliverables,
 socials — lives in one file: [`src/content/portfolio.ts`](src/content/portfolio.ts).**
-Replace the demo data there and the whole site updates.
+Replace the demo data there and the whole site updates. Project `cover` (1–6)
+picks a poster palette and `runtime` shows on the film slate.
 
 ## Structure
 
@@ -53,15 +37,21 @@ Replace the demo data there and the whole site updates.
 src/
 ├── app/            # layout, page, global styles (design tokens in globals.css)
 ├── content/        # ⭐ portfolio.ts — all site content
-├── canvas/         # 3D: Scene (camera choreography), Avatar, Vinyl, Backdrop
-├── components/     # PlayerBar, TrackNav, AppLoader, sections/
-├── hooks/          # useAudioPlayer, useActiveSection
-└── lib/            # scrollStore (shared scroll state), motion tokens
+├── components/
+│   ├── chrome/     # TopNav (wordmark + REC), ScrollProgress (projector line)
+│   ├── scenes/     # Hero, Marquee, NowShowing, PosterRow
+│   ├── sections/   # About, Skills (credits roll), Experience, Deliverables, Contact
+│   └── hero/       # Magnetic (magnetic buttons)
+├── hooks/          # useActiveScene (nav highlight via IntersectionObserver)
+└── lib/            # motion.ts (shared framer-motion variants)
 ```
 
-## Notes
+## Verify
 
-- Music is autoplay-safe (starts only on user gesture); mute preference persists.
-- `prefers-reduced-motion`: smooth scroll and the live canvas are disabled,
-  replaced by a static gradient stage.
-- The player progress bar doubles as a scroll scrubber — click to seek the page.
+```bash
+npm run build            # must be green
+node scripts/check-site.mjs    # intro-once, anchors, nav highlight, progress, a11y
+node scripts/shoot-page.mjs    # screenshot sweep of every scene (desktop + mobile)
+```
+
+Both scripts expect a server on `localhost:3000` (`npm run start`).
