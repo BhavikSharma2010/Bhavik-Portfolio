@@ -18,7 +18,7 @@ export default function Page() {
       <main>
         <Hero />
         <Marquee
-          items={["Now Showing", "4 Films", "One Night Only", "Rated S — Seriously Serious Code"]}
+          items={["Now Showing", "4 Films", "Showtimes · Daily", "One Night Only", "Rated S — Seriously Serious Code"]}
         />
         <NowShowing />
         <About />
