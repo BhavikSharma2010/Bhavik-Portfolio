@@ -1,0 +1,289 @@
+/* The screening room — everything is fixed, above the grain overlay (80). */
+
+.host {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 4, 3, 0.88);
+  backdrop-filter: blur(6px);
+}
+
+.dialog {
+  position: relative;
+  width: min(56rem, 100%);
+  max-height: calc(100vh - 2 * var(--gutter));
+  overflow-y: auto;
+  background: var(--surface-solid);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: clamp(1.1rem, 2.5vw, 2rem);
+  display: grid;
+  gap: 1.1rem;
+  outline: none;
+}
+
+/* ── slate header ── */
+.slate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.slateText {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+}
+
+.close {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-dim);
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition:
+    color var(--dur-fast),
+    border-color var(--dur-fast),
+    background var(--dur-fast);
+}
+
+.close:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── letterboxed screen ── */
+.screen {
+  position: relative;
+}
+
+.screenArt {
+  position: relative;
+  aspect-ratio: 2.39 / 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  box-shadow:
+    0 0 0 6px #000,
+    0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* letterbox bars */
+.screenArt::before,
+.screenArt::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 7.5%;
+  background: #000;
+  z-index: 1;
+}
+
+/* ── live "footage": the project's widescreen capture, Ken Burns ── */
+.screenFootage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.footagePan {
+  position: absolute;
+  inset: 0;
+  animation: footagePan 12s ease-in-out infinite alternate;
+}
+
+.footageImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  animation: footageZoom 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* keeps any residual text legible over bright footage */
+.footageScrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+.screenFootage[data-paused] .footagePan,
+.screenFootage[data-paused] .footageImg {
+  animation-play-state: paused;
+}
+
+@keyframes footagePan {
+  from {
+    transform: translateX(-1.5%);
+  }
+
+  to {
+    transform: translateX(1.5%);
+  }
+}
+
+@keyframes footageZoom {
+  from {
+    transform: scale(1.06);
+  }
+
+  to {
+    transform: scale(1.14);
+  }
+}
+
+.screenArt::before {
+  top: 0;
+}
+
+.screenArt::after {
+  bottom: 0;
+}
+
+.shot {
+  position: relative;
+  z-index: 2; /* above the footage layer and the letterbox bars */
+  display: grid;
+  gap: 0.7rem;
+  justify-items: center;
+  text-align: center;
+  max-width: 34rem;
+}
+
+.shotKicker {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.75);
+}
+
+.shotLine {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1rem + 2.6vw, 2.8rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+}
+
+/* shot navigation dots */
+.shotDots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.shotDot {
+  width: 26px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background var(--dur-fast);
+}
+
+.shotDot[data-active] {
+  background: var(--accent);
+}
+
+.shotDot:hover {
+  background: var(--gold);
+}
+
+/* ── credits below the screen ── */
+.title {
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+  margin-top: 0.3rem;
+}
+
+.logline {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+}
+
+.synopsis {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  max-width: 46rem;
+}
+
+.castList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.6rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.1rem;
+}
+
+.castEntry {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.castRole {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.castName {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.3rem;
+}
+
+@media (max-width: 640px) {
+  .screenArt {
+    aspect-ratio: 16 / 9;
+  }
+
+  .castList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footagePan,
+  .footageImg {
+    animation: none;
+  }
+}

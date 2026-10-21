@@ -4,6 +4,22 @@
  * Data sourced from Bhavik Sharma's CV (latest, updated).
  */
 
+export interface TrailerShot {
+  /** Small mono kicker above the line ("In a world where…"). */
+  kicker: string;
+  /** The big kinetic-typography line of the frame. */
+  line: string;
+}
+
+export interface Trailer {
+  /** One-line pitch shown under the screen. */
+  logline: string;
+  /** Auto-playing kinetic-typography frames of the mock trailer. */
+  shots: TrailerShot[];
+  /** Tech stack presented as end credits. */
+  cast: { role: string; name: string }[];
+}
+
 export interface Project {
   title: string;
   description: string;
@@ -15,9 +31,15 @@ export interface Project {
   cover: 1 | 2 | 3 | 4 | 5 | 6;
   /** Playful film runtime shown on the poster slate */
   runtime: string;
+  /** Mock trailer shown in the trailer modal; every film gets one. */
+  trailer?: Trailer;
+  /** Full-width landing capture (decorative — title overlay is the content). */
+  still?: { src: string; width: number; height: number };
 }
 
 export interface ExperienceItem {
+  /** Stable id fragment for the accordion row anchor (e.g. "ambufast-hms"). */
+  slug?: string;
   role: string;
   company: string;
   period: string;
@@ -33,6 +55,8 @@ export interface SkillGroup {
 }
 
 export interface Exchange {
+  /** Stable id fragment for the pitch row anchor (e.g. "plan"). */
+  slug?: string;
   take: string;
   deliver: string;
 }
@@ -52,6 +76,8 @@ export interface Portfolio {
     heading: string;
     paragraphs: string[];
     stats: { value: string; label: string }[];
+    /** Director's commentary: anecdotes attached after the Nth paragraph (1-based). */
+    commentary?: { afterParagraph: number; note: string }[];
   };
   skills: SkillGroup[];
   projects: Project[];
@@ -91,6 +117,20 @@ export const portfolio: Portfolio = {
       { value: "3", label: "films shipped" },
       { value: "1", label: "studio internship" },
       { value: "∞", label: "midnight builds" },
+    ],
+    commentary: [
+      {
+        afterParagraph: 1,
+        note: "Director's note: the \"levelling up TypeScript\" line is literal — this very site is the homework. Shot entirely in strict mode.",
+      },
+      {
+        afterParagraph: 2,
+        note: "Director's note: AmbuFast is a two-feature gig — the hospital platform by day, JotFlow by night. Same studio, second unit.",
+      },
+      {
+        afterParagraph: 3,
+        note: "Director's note: the Voice Command Stopwatch was born because my hands were full of chai. Necessity, as always, wrote the script.",
+      },
     ],
   },
   skills: [
@@ -135,6 +175,22 @@ export const portfolio: Portfolio = {
       link: "https://www.prachlit.in",
       cover: 5,
       runtime: "6 min",
+      still: { src: "/screenshots/prachlit.webp", width: 1600, height: 1000 },
+      trailer: {
+        logline: "One firm. Four service lines. A single screen that sells them all.",
+        shots: [
+          { kicker: "Enterprise consulting", line: "Deserved a better website" },
+          { kicker: "Clients include", line: "Adani ConneX · Times of India" },
+          { kicker: "Shot end-to-end", line: "One director. Design to deploy." },
+          { kicker: "Now playing at", line: "prachlit.in" },
+        ],
+        cast: [
+          { role: "Starring", name: "Next.js" },
+          { role: "Featuring", name: "React.js" },
+          { role: "Production Design", name: "Custom Admin Backend" },
+          { role: "Edited by", name: "Bhavik Sharma" },
+        ],
+      },
     },
     {
       title: "Virtual Photo Booth",
@@ -145,6 +201,22 @@ export const portfolio: Portfolio = {
       link: "#",
       cover: 1,
       runtime: "4 min",
+      still: { src: "/screenshots/photobooth.webp", width: 1600, height: 1000 },
+      trailer: {
+        logline: "The pictures vanish. The memories don't.",
+        shots: [
+          { kicker: "This photo booth", line: "Never saves your pictures" },
+          { kicker: "Three frames or four", line: "Strips and grids, instantly" },
+          { kicker: "Vintage. Black & white.", line: "Developed in your browser" },
+          { kicker: "Rated P for", line: "Privacy" },
+        ],
+        cast: [
+          { role: "Starring", name: "React.js" },
+          { role: "Cinematography", name: "react-webcam" },
+          { role: "Wardrobe", name: "Tailwind CSS" },
+          { role: "Set Design", name: "LocalStorage" },
+        ],
+      },
     },
     {
       title: "Employee Management System",
@@ -152,9 +224,25 @@ export const portfolio: Portfolio = {
         "A management dashboard with role-based access control — administrators assign and monitor employee tasks, with full task-status tracking and responsive interfaces built on Tailwind CSS.",
       tags: ["React.js", "Tailwind CSS", "LocalStorage"],
       year: "2026",
-      link: "#",
+      link: "https://bhaviksems.vercel.app/",
       cover: 2,
       runtime: "5 min",
+      still: { src: "/screenshots/ems.webp", width: 1600, height: 1000 },
+      trailer: {
+        logline: "Every task tracked. Every role in its place.",
+        shots: [
+          { kicker: "Admin mode: engaged", line: "Assign. Monitor. Done." },
+          { kicker: "Role-based access", line: "Everyone sees only their scene" },
+          { kicker: "Task status, live", line: "From to-do to wrapped" },
+          { kicker: "A dashboard with", line: "No missing frames" },
+        ],
+        cast: [
+          { role: "Starring", name: "React.js" },
+          { role: "Supporting", name: "Tailwind CSS" },
+          { role: "Continuity", name: "Role-Based Access Control" },
+          { role: "Key Grip", name: "LocalStorage" },
+        ],
+      },
     },
     {
       title: "Voice Command Stopwatch",
@@ -162,13 +250,30 @@ export const portfolio: Portfolio = {
         "A stopwatch that listens — hands-free lap control through the Web Speech API, with dark/light themes and MongoDB storing every lap history between sessions.",
       tags: ["JavaScript", "Web Speech API", "Node.js", "MongoDB"],
       year: "2025",
-      link: "#",
+      link: "https://bhavik-stopwatch.netlify.app",
       cover: 4,
       runtime: "3 min",
+      still: { src: "/screenshots/stopwatch.webp", width: 1600, height: 1000 },
+      trailer: {
+        logline: "Don't touch that button. Say it.",
+        shots: [
+          { kicker: "Hands full?", line: "The stopwatch listens anyway" },
+          { kicker: "You say \"lap\"", line: "It hears you. First take." },
+          { kicker: "Every lap remembered", line: "MongoDB keeps the history" },
+          { kicker: "A thriller in", line: "Real time" },
+        ],
+        cast: [
+          { role: "Starring", name: "Web Speech API" },
+          { role: "Featuring", name: "JavaScript" },
+          { role: "Sound Department", name: "Node.js" },
+          { role: "Archivist", name: "MongoDB" },
+        ],
+      },
     },
   ],
   experience: [
     {
+      slug: "ambufast-hms",
       role: "Software Developer Intern — Hospital Management System",
       company: "AmbuFast, Nagpur",
       period: "Apr 2026 — Present",
@@ -181,6 +286,7 @@ export const portfolio: Portfolio = {
       ],
     },
     {
+      slug: "ambufast-jotflow",
       role: "Software Developer Intern — JotFlow",
       company: "AmbuFast, Nagpur",
       period: "Apr 2026 — Present",
@@ -194,11 +300,11 @@ export const portfolio: Portfolio = {
     },
   ],
   deliverables: [
-    { take: "An idea or a rough feature brief", deliver: "Clean, reusable React.js components" },
-    { take: "A workflow drowning in manual steps", deliver: "A dashboard that tracks it in real time" },
-    { take: "A third-party API to wire in", deliver: "A seamless integration that just works" },
-    { take: "Users on every screen size", deliver: "Responsive interfaces with Tailwind CSS" },
-    { take: "A frontend that feels slow", deliver: "Tested, debugged, and optimized performance" },
+    { slug: "plan", take: "An idea or a rough feature brief", deliver: "Clean, reusable React.js components" },
+    { slug: "workflow", take: "A workflow drowning in manual steps", deliver: "A dashboard that tracks it in real time" },
+    { slug: "api", take: "A third-party API to wire in", deliver: "A seamless integration that just works" },
+    { slug: "responsive", take: "Users on every screen size", deliver: "Responsive interfaces with Tailwind CSS" },
+    { slug: "performance", take: "A frontend that feels slow", deliver: "Tested, debugged, and optimized performance" },
   ],
   contact: {
     heading: "Catch the premiere",

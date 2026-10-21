@@ -1,60 +1,116 @@
-.row {
+/* ── the filmstrip: horizontally scrolling film cards ────── */
+
+.strip {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(1.5rem, 3vw, 3.5rem);
-  align-items: center;
-  padding: clamp(2.5rem, 2rem + 3vw, 4.5rem) 0;
-  border-bottom: 1px solid var(--line);
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(17rem, 72vw, 23rem);
+  gap: 1.25rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  /* room for card shadows so they don't clip mid-scroll */
+  padding: 0.25rem 0.25rem 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
 }
 
-.row:last-child {
-  border-bottom: none;
+.strip::-webkit-scrollbar {
+  height: 8px;
 }
 
-.row[data-even="true"] {
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+.strip::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 4px;
 }
 
-.row[data-even="true"] .posterWrap {
-  order: 2;
-}
-
-/* ── poster panel: gradient art, no image assets ─────────── */
-
-.posterWrap {
-  perspective: 800px;
-}
-
-.poster {
-  position: relative;
-  aspect-ratio: 2 / 3;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
+.card {
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 1.2rem;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition:
+    border-color var(--dur-normal) var(--ease-out-expo),
+    box-shadow var(--dur-normal) var(--ease-out-expo);
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--gold) 30%, transparent);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* ── card art: the project's full-width landing capture ──── */
+
+.cardArtWrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Nested tilt wrapper: the cursor-driven 3D tilt lives here so it never
+   fights other transforms. Rotates via --rx/--ry; the glare pseudo-element
+   tracks --gx/--gy (written from PosterRow's pointer handlers). */
+.cardArtTilt {
+  position: absolute;
+  inset: 0;
+  transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.3s var(--ease-out-expo);
   will-change: transform;
 }
 
-.posterTitle {
+.cardArtTilt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    260px circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(244, 239, 230, 0.28),
+    transparent 65%
+  );
+  mix-blend-mode: soft-light;
+  opacity: var(--glare, 0);
+  transition: opacity 0.3s var(--ease-out-expo);
+}
+
+/* full width of the capture is always in frame; the natural
+   below-the-fold continuation is all that's cropped */
+.cardArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.cardScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, transparent 42%);
+}
+
+.cardTitle {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 3rem);
+  font-size: 1.3rem;
+  line-height: 1.1;
   text-transform: uppercase;
-  line-height: 1;
+  text-align: left;
   color: var(--text);
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
 }
 
-.posterYear {
-  font-family: var(--font-mono);
-  font-size: var(--text-small);
-  letter-spacing: 0.2em;
-  color: rgba(244, 239, 230, 0.75);
-}
-
-/* six poster palettes — red / gold / bone washes over black */
+/* six gradient palettes — fallback art when a capture is missing, and the
+   trailer screen's base (reused by TrailerModal via this module) */
 .poster1 {
   background: linear-gradient(160deg, #e63946 0%, #7a1620 45%, #140b0c 100%);
 }
@@ -65,14 +121,6 @@
 
 .poster3 {
   background: linear-gradient(150deg, #f4efe6 0%, #8f887a 40%, #141310 100%);
-}
-
-.poster3 .posterTitle {
-  color: #171512;
-}
-
-.poster3 .posterYear {
-  color: rgba(23, 21, 18, 0.7);
 }
 
 .poster4 {
@@ -87,41 +135,49 @@
   background: linear-gradient(205deg, #9c2b48 0%, #3d1220 50%, #0d0709 100%);
 }
 
-/* ── details column ──────────────────────────────────────── */
+/* ── card body ───────────────────────────────────────────── */
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.2rem 1.2rem 1.4rem;
+}
 
 .slate {
   font-family: var(--font-mono);
-  font-size: var(--text-small);
-  letter-spacing: 0.2em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   color: var(--accent);
-  margin-bottom: 0.9rem;
 }
 
 .filmTitle {
-  font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem);
-  margin-bottom: 1rem;
+  font-size: 1.55rem;
 }
 
 .synopsis {
   color: var(--text-dim);
-  max-width: 34rem;
-  margin-bottom: 1.4rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .genres {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.8rem;
+  gap: 0.4rem;
 }
 
 .genre {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.32rem 0.8rem;
+  padding: 0.28rem 0.7rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   color: var(--text-dim);
@@ -129,14 +185,15 @@
 
 .links {
   display: flex;
-  gap: 0.9rem;
+  gap: 0.7rem;
   flex-wrap: wrap;
   align-items: center;
+  margin-top: auto;
 }
 
 .privateReel {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-faint);
@@ -145,17 +202,24 @@
   border-radius: var(--radius-sm);
 }
 
-@media (max-width: 800px) {
-  .row,
-  .row[data-even="true"] {
-    grid-template-columns: minmax(0, 1fr);
+@media (max-width: 640px) {
+  .strip {
+    grid-auto-columns: min(82vw, 19rem);
   }
 
-  .row[data-even="true"] .posterWrap {
-    order: 0;
+  .cardTitle {
+    font-size: 1.1rem;
   }
 
-  .poster {
-    aspect-ratio: 16 / 10;
+  .filmTitle {
+    font-size: 1.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardArtTilt,
+  .cardArtTilt::after,
+  .card {
+    transition: none;
   }
 }

@@ -1,48 +1,92 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef, type PointerEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/content/portfolio";
 import { FADE_UP } from "@/lib/motion";
 import { Magnetic } from "@/components/hero/Magnetic";
 import styles from "./now-showing.module.css";
 
+const MAX_TILT_DEG = 5;
+
 interface PosterRowProps {
   project: Project;
   index: number;
+  onOpenTrailer: () => void;
 }
 
-/** One film in the NOW SHOWING bill: poster panel + credits column. */
-export function PosterRow({ project, index }: PosterRowProps) {
-  const ref = useRef<HTMLElement>(null);
+/**
+ * One card in the NOW SHOWING filmstrip: the project's full-width landing
+ * capture on top, credits below. Cards sit side by side in a horizontally
+ * scrolling strip (see .strip in the CSS module).
+ */
+export function PosterRow({ project, index, onOpenTrailer }: PosterRowProps) {
+  const tiltRef = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const posterY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-  const even = index % 2 === 1;
+
+  // Cursor-tracked 3D tilt on the card art, written as CSS vars — skipped
+  // for touch pointers and reduced motion.
+  const tiltArt = (event: PointerEvent<HTMLElement>) => {
+    const tilt = tiltRef.current;
+    if (!tilt || prefersReduced || event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const px = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const py = (event.clientY - bounds.top) / bounds.height - 0.5;
+    tilt.style.setProperty("--ry", `${(px * MAX_TILT_DEG).toFixed(2)}deg`);
+    tilt.style.setProperty("--rx", `${(-py * MAX_TILT_DEG).toFixed(2)}deg`);
+    tilt.style.setProperty("--gx", `${((px + 0.5) * 100).toFixed(1)}%`);
+    tilt.style.setProperty("--gy", `${((py + 0.5) * 100).toFixed(1)}%`);
+    tilt.style.setProperty("--glare", "1");
+  };
+
+  const resetTilt = () => {
+    const tilt = tiltRef.current;
+    if (!tilt) return;
+    tilt.style.setProperty("--rx", "0deg");
+    tilt.style.setProperty("--ry", "0deg");
+    tilt.style.setProperty("--gx", "50%");
+    tilt.style.setProperty("--gy", "50%");
+    tilt.style.setProperty("--glare", "0");
+  };
 
   return (
     <motion.article
-      ref={ref}
       id={`film-${index + 1}`}
-      className={styles.row}
-      data-even={even || undefined}
+      className={styles.card}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-12%" }}
+      viewport={{ once: true, margin: "0px -8% 0px 0px" }}
       variants={FADE_UP}
     >
-      <div className={styles.posterWrap}>
-        <motion.div
-          className={`${styles.poster} ${styles[`poster${project.cover}`]}`}
-          style={prefersReduced ? undefined : { y: posterY }}
-          aria-hidden="true"
-        >
-          <span className={styles.posterTitle}>{project.title}</span>
-          <span className={styles.posterYear}>{project.year}</span>
-        </motion.div>
-      </div>
+      <button
+        type="button"
+        className={styles.cardArtWrap}
+        data-cursor="play"
+        aria-label={`Watch trailer: ${project.title}`}
+        onClick={onOpenTrailer}
+        onPointerMove={tiltArt}
+        onPointerLeave={resetTilt}
+      >
+        <div ref={tiltRef} className={styles.cardArtTilt} aria-hidden="true">
+          {project.still ? (
+            <img
+              className={styles.cardArt}
+              src={project.still.src}
+              width={project.still.width}
+              height={project.still.height}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <span className={`${styles.cardArt} ${styles[`poster${project.cover}`]}`} />
+          )}
+          <span className={styles.cardScrim} />
+          <span className={styles.cardTitle}>{project.title}</span>
+        </div>
+      </button>
 
-      <div className={styles.details}>
+      <div className={styles.cardBody}>
         <p className={styles.slate}>
           SCENE {String(index + 1).padStart(2, "0")} · {project.year} · RUNTIME {project.runtime}
         </p>
@@ -58,10 +102,25 @@ export function PosterRow({ project, index }: PosterRowProps) {
         </ul>
 
         <div className={styles.links}>
+          <Magnetic>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={onOpenTrailer}
+              data-cursor="play"
+            >
+              Watch trailer
+            </button>
+          </Magnetic>
           {project.link !== "#" && (
             <Magnetic>
-              <a className="btn btn-primary" href={project.link}>
-                Watch trailer
+              <a
+                className="btn btn-ghost"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit the premiere
               </a>
             </Magnetic>
           )}
