@@ -74,6 +74,36 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Director's cut grade (Konami easter egg): heavier grain + a red wash.
+   Opacity/color only — never a filter on body, that would repaint on scroll. */
+html[data-directors-cut] {
+  --grain-opacity: 0.16;
+}
+
+html[data-directors-cut] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 79;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(122, 22, 32, 0.1) 0%,
+    rgba(122, 22, 32, 0.24) 100%
+  );
+  animation: dcFadeIn 600ms var(--ease-out-expo);
+}
+
+@keyframes dcFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 h1,
 h2,
 h3 {
@@ -108,7 +138,34 @@ button {
   color: var(--text);
 }
 
+/* Custom cinema cursor active: hide the native pointer (fine pointers only;
+   the CursorSpotlight component adds/removes the class). Keyboard focus
+   outlines are untouched — they are outlines, not cursors. */
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none;
+  }
+}
+
 /* ── Shared primitives ───────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
 
 .kicker {
   font-family: var(--font-mono);

@@ -1,0 +1,36 @@
+.flash {
+  position: fixed;
+  inset: 0;
+  z-index: 350;
+  background: #fff;
+  pointer-events: none;
+  animation: flashOut 450ms ease-out forwards;
+}
+
+@keyframes flashOut {
+  from {
+    opacity: 0.9;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  z-index: 360;
+  max-width: min(30rem, calc(100vw - 2rem));
+  background: var(--surface-solid);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}

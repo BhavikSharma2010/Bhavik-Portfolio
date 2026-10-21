@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Inter, JetBrains_Mono } from "next/font/google";
 import { AppLoader } from "@/components/AppLoader";
+import { CursorSpotlight } from "@/components/fx/CursorSpotlight";
+import { EasterEggs } from "@/components/fx/EasterEggs";
 import "./globals.css";
 
 const anton = Anton({
@@ -47,6 +49,8 @@ export default function RootLayout({
     <html lang="en" className={`${anton.variable} ${inter.variable} ${jetbrains.variable}`}>
       <body>
         <AppLoader />
+        <CursorSpotlight />
+        <EasterEggs />
         {children}
       </body>
     </html>
