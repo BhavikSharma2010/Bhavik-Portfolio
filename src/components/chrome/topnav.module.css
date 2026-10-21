@@ -49,6 +49,30 @@
   color: var(--accent);
 }
 
+.soundToggle {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--text-dim);
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition:
+    color var(--dur-fast),
+    border-color var(--dur-fast);
+  flex-shrink: 0;
+}
+
+.soundToggle:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.soundToggle[aria-pressed="true"] {
+  color: var(--gold);
+  border-color: color-mix(in srgb, var(--gold) 50%, transparent);
+}
+
 .rec {
   display: inline-flex;
   align-items: center;
@@ -69,6 +93,20 @@
 
 .recDot[data-blink] {
   animation: recBlink 1.4s steps(1) infinite;
+}
+
+/* film-burn overlay (wordmark double-click egg): fixed, iris-out white */
+.burn {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  background: radial-gradient(
+    ellipse at center,
+    #fff7e8 0%,
+    #f0b429 45%,
+    #e63946 100%
+  );
+  pointer-events: none;
 }
 
 @keyframes recBlink {
