@@ -31,16 +31,26 @@ export function Contact() {
           {contact.blurb}
         </motion.p>
 
-        <motion.div className={styles.encoreActions} variants={FADE_UP}>
-          <a className="btn btn-primary" href={`mailto:${profile.email}`}>
-            RSVP by email
-          </a>
-          <a className="btn btn-ghost" href={`tel:${profile.phone.replace(/\s/g, "")}`}>
-            Call the studio
-          </a>
-          <a className="btn btn-ghost" href={profile.resumeUrl}>
-            Read the treatment
-          </a>
+        <motion.div className={styles.ticket} variants={FADE_UP}>
+          <span className={styles.ticketStub} aria-hidden="true">
+            Admit One
+          </span>
+          <div className={styles.ticketBody}>
+            <p className={styles.ticketMeta}>
+              Premiere Night · Row A · Seat 07 · {profile.location}
+            </p>
+            <div className={styles.encoreActions}>
+              <a className="btn btn-primary" href={`mailto:${profile.email}`}>
+                RSVP by email
+              </a>
+              <a className="btn btn-ghost" href={`tel:${profile.phone.replace(/\s/g, "")}`}>
+                Call the studio
+              </a>
+              <a className="btn btn-ghost" href={profile.resumeUrl}>
+                Read the treatment
+              </a>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div className={styles.socials} variants={FADE_UP}>

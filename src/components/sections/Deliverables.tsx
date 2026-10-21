@@ -24,7 +24,7 @@ export function Deliverables() {
         {deliverables.map((exchange, index) => (
           <motion.div
             key={exchange.take}
-            id={`del-${["plan", "ui", "refactor", "api", "launch"][index] ?? index}`}
+            id={`del-${exchange.slug ?? index + 1}`}
             className={styles.exchange}
             variants={FADE_UP}
           >

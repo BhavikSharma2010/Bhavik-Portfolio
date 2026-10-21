@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { portfolio } from "@/content/portfolio";
 import { FADE_UP, STAGGER_CHILDREN } from "@/lib/motion";
+import { CountUp } from "@/components/fx/CountUp";
 import { SectionHead } from "@/components/sections/SectionHead";
 import styles from "./sections.module.css";
 
@@ -31,16 +32,42 @@ export function About() {
           viewport={{ once: true, margin: "-10%" }}
           variants={STAGGER_CHILDREN}
         >
-          {about.paragraphs.map((paragraph, index) => (
-            <motion.p
-              key={paragraph.slice(0, 32)}
-              id={`about-p${index + 1}`}
-              className={styles.reveal}
-              variants={FADE_UP}
-            >
-              {paragraph}
-            </motion.p>
-          ))}
+          {about.paragraphs.map((paragraph, index) => {
+            const note = about.commentary?.find(
+              (entry) => entry.afterParagraph === index + 1,
+            );
+            return (
+              <motion.p
+                key={paragraph.slice(0, 32)}
+                id={`about-p${index + 1}`}
+                className={styles.reveal}
+                variants={FADE_UP}
+              >
+                {paragraph}
+                {note ? (
+                  <>
+                    {" "}
+                    <button
+                      type="button"
+                      className={styles.commentaryMark}
+                      popoverTarget={`commentary-${index + 1}`}
+                      aria-label="Director's commentary"
+                      title="Director's commentary"
+                    >
+                      ※
+                    </button>
+                    <span
+                      popover="auto"
+                      id={`commentary-${index + 1}`}
+                      className={styles.commentaryPopover}
+                    >
+                      {note.note}
+                    </span>
+                  </>
+                ) : null}
+              </motion.p>
+            );
+          })}
         </motion.div>
       </div>
 
@@ -54,7 +81,9 @@ export function About() {
       >
         {about.stats.map((stat) => (
           <motion.div key={stat.label} className={styles.stat} variants={FADE_UP}>
-            <span className={styles.statValue}>{stat.value}</span>
+            <span className={styles.statValue}>
+              <CountUp value={stat.value} />
+            </span>
             <span className={styles.statLabel}>{stat.label}</span>
           </motion.div>
         ))}

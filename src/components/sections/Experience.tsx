@@ -23,7 +23,7 @@ export function Experience() {
           return (
             <div
               key={`${item.company}-${item.role}`}
-              id={`exp-${["freelance", "startup", "origin"][index] ?? index}`}
+              id={`exp-${item.slug ?? index + 1}`}
               className={styles.trackRow}
             >
               <button

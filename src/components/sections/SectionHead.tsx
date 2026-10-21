@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FADE_UP } from "@/lib/motion";
+import { ScrambleText } from "@/components/fx/ScrambleText";
 
 interface SectionHeadProps {
   index: string;
@@ -9,7 +10,7 @@ interface SectionHeadProps {
   id: string;
 }
 
-/** Film slate header: red SCENE marker + big Anton title. */
+/** Film slate header: red SCENE marker + big Anton title that decodes on view. */
 export function SectionHead({ index, title, id }: SectionHeadProps) {
   return (
     <motion.header
@@ -22,7 +23,7 @@ export function SectionHead({ index, title, id }: SectionHeadProps) {
         SCENE {index} · TAKE 01
       </motion.span>
       <motion.h2 className="section-title" variants={FADE_UP} id={id}>
-        {title}
+        <ScrambleText text={title} />
       </motion.h2>
     </motion.header>
   );
