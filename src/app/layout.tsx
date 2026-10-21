@@ -26,12 +26,13 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bhavik — Bhavik Studios",
+  title: "Bhavik Sharma — Frontend Developer",
   description:
-    "Bhavik Studios presents: a software developer's portfolio shot as a feature film — now showing, origin story, cast & crew, and a premiere night invitation.",
+    "Bhavik Sharma, Frontend Developer (React.js · Next.js · TypeScript). Bhavik Studios presents: a software developer's portfolio shot as a feature film — now showing, origin story, cast & crew, and a premiere night invitation.",
   openGraph: {
-    title: "Bhavik Studios",
-    description: "He builds web experiences that feel alive. Now showing.",
+    title: "Bhavik Sharma — Frontend Developer",
+    description:
+      "He builds web experiences that feel alive. Now showing at Bhavik Studios.",
     type: "website",
   },
 };
