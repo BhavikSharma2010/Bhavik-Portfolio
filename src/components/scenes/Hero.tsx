@@ -46,7 +46,7 @@ export function Hero() {
               initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 80, rotateX: -70 }}
               animate={prefersReduced ? { opacity: 1 } : { opacity: 1, y: 0, rotateX: 0 }}
               transition={{ delay: 0.35 + index * 0.05, duration: 0.7, ease: EASE_OUT_EXPO }}
-              whileHover={prefersReduced ? undefined : { y: -10, color: "#e63946" }}
+              whileHover={prefersReduced ? undefined : { y: -10 }}
             >
               {letter === " " ? " " : letter}
             </motion.span>
