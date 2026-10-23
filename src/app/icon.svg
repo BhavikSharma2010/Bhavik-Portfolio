@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="6" fill="#0b0a08"/>
+  <rect width="64" height="64" rx="6" fill="#e8dfc8"/>
   <!-- clapperboard -->
-  <rect x="12" y="22" width="40" height="28" rx="2" fill="#14120d" stroke="#f4efe6" stroke-width="2"/>
+  <rect x="12" y="22" width="40" height="28" rx="2" fill="#e0d5b8" stroke="#26332a" stroke-width="2"/>
   <!-- clapper stripes -->
   <g transform="skewX(-18)">
-    <rect x="22" y="12" width="7" height="10" fill="#e63946"/>
-    <rect x="33" y="12" width="7" height="10" fill="#f4efe6"/>
-    <rect x="44" y="12" width="7" height="10" fill="#e63946"/>
-    <rect x="55" y="12" width="7" height="10" fill="#f4efe6"/>
+    <rect x="22" y="12" width="7" height="10" fill="#6b7a33"/>
+    <rect x="33" y="12" width="7" height="10" fill="#9a7a33"/>
+    <rect x="44" y="12" width="7" height="10" fill="#6b7a33"/>
+    <rect x="55" y="12" width="7" height="10" fill="#9a7a33"/>
   </g>
-  <rect x="10" y="21" width="46" height="3" fill="#f4efe6"/>
+  <rect x="10" y="21" width="46" height="3" fill="#26332a"/>
   <!-- rec dot -->
-  <circle cx="32" cy="37" r="5" fill="#e63946"/>
+  <circle cx="32" cy="37" r="5" fill="#6b7a33"/>
 </svg>

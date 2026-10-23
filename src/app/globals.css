@@ -1,20 +1,34 @@
 :root {
-  /* ── Color ─────────────────────────────────────────────── */
-  --bg: #0b0a08; /* warm black */
-  --bg-raised: #14120d;
-  --surface: rgba(244, 239, 230, 0.05);
-  --surface-hover: rgba(244, 239, 230, 0.09);
-  --surface-solid: rgba(11, 10, 8, 0.85);
-  --text: #f4efe6; /* bone */
-  --text-dim: #a39e93;
-  --text-faint: #635d52;
-  --accent: #e63946; /* cinema red */
-  --accent-strong: #ff5a66;
-  --accent-dim: rgba(230, 57, 70, 0.14);
-  --accent-glow: rgba(230, 57, 70, 0.35);
-  --gold: #f0b429; /* marquee gold */
-  --gold-dim: rgba(240, 180, 41, 0.14);
-  --line: rgba(244, 239, 230, 0.1);
+  /* ── Color — Palette A: "Olive Editorial" ─────────────────
+     Khaki-cream page, deep forest ink text, deep olive accent,
+     champagne-brass secondary. Alternate dark palette below:
+     html[data-palette="forest"]. */
+  --bg: #e8dfc8;
+  --bg-raised: #e0d5b8;
+  --surface: rgba(38, 51, 42, 0.05);
+  --surface-hover: rgba(38, 51, 42, 0.09);
+  --surface-solid: rgba(232, 223, 200, 0.92);
+  --text: #26332a; /* deep forest ink */
+  --text-dim: #4c584e;
+  --text-faint: #7e887c;
+  --accent: #6b7a33; /* light olive */
+  --accent-strong: #7d8c42;
+  --accent-dim: rgba(107, 122, 51, 0.16);
+  --accent-glow: rgba(107, 122, 51, 0.35);
+  --gold: #9a7a33; /* champagne brass */
+  --gold-dim: rgba(154, 122, 51, 0.16);
+  --line: rgba(38, 51, 42, 0.15);
+
+  /* rgb channels for alpha-tinted derivatives (glows, rings, scrims) */
+  --accent-rgb: 107, 122, 51;
+  --gold-rgb: 154, 122, 51;
+  --text-rgb: 38, 51, 42;
+  --wash-inner: rgba(107, 122, 51, 0.08);
+  --wash-outer: rgba(107, 122, 51, 0.2);
+
+  /* warm ink-tinted elevation for the light page */
+  --shadow-lift: 0 14px 40px rgba(38, 51, 42, 0.16);
+  --shadow-deep: 0 24px 60px rgba(38, 51, 42, 0.22);
 
   /* ── Type ──────────────────────────────────────────────── */
   --font-display: var(--font-anton), "Arial Narrow", Impact, sans-serif;
@@ -49,8 +63,38 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
+}
+
+/* Palette B: "Forest + Brass" — dark-luxury trial. Flip by putting
+   data-palette="forest" on <html> in layout.tsx. */
+html[data-palette="forest"] {
+  color-scheme: dark;
+  --bg: #07120d;
+  --bg-raised: #0c1c14;
+  --surface: rgba(239, 233, 217, 0.05);
+  --surface-hover: rgba(239, 233, 217, 0.09);
+  --surface-solid: rgba(7, 18, 13, 0.88);
+  --text: #efe9d9; /* warm cream */
+  --text-dim: #9fae9f;
+  --text-faint: #5f6d60;
+  --accent: #2e9d6b; /* forest green, brightened for dark bg */
+  --accent-strong: #3fbf85;
+  --accent-dim: rgba(46, 157, 107, 0.14);
+  --accent-glow: rgba(46, 157, 107, 0.35);
+  --gold: #c9973b; /* brass */
+  --gold-dim: rgba(201, 151, 59, 0.14);
+  --line: rgba(239, 233, 217, 0.12);
+
+  --accent-rgb: 46, 157, 107;
+  --gold-rgb: 201, 151, 59;
+  --text-rgb: 239, 233, 217;
+  --wash-inner: rgba(4, 26, 17, 0.1);
+  --wash-outer: rgba(4, 26, 17, 0.26);
+
+  --shadow-lift: 0 14px 40px rgba(0, 0, 0, 0.45);
+  --shadow-deep: 0 24px 60px rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -74,7 +118,7 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Director's cut grade (Konami easter egg): heavier grain + a red wash.
+/* Director's cut grade (Konami easter egg): heavier grain + a green wash.
    Opacity/color only — never a filter on body, that would repaint on scroll. */
 html[data-directors-cut] {
   --grain-opacity: 0.16;
@@ -88,8 +132,8 @@ html[data-directors-cut] body::before {
   pointer-events: none;
   background: radial-gradient(
     ellipse at center,
-    rgba(122, 22, 32, 0.1) 0%,
-    rgba(122, 22, 32, 0.24) 100%
+    var(--wash-inner) 0%,
+    var(--wash-outer) 100%
   );
   animation: dcFadeIn 600ms var(--ease-out-expo);
 }
