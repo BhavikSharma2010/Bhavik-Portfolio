@@ -38,7 +38,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0a08",
+  // Palette A "Olive Editorial". If trialing html[data-palette="forest"],
+  // use #07120d instead.
+  themeColor: "#e8dfc8",
 };
 
 export default function RootLayout({
@@ -47,7 +49,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${anton.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${anton.variable} ${inter.variable} ${jetbrains.variable}`}
+    >
+      <head>
+        {/* Apply a stored non-default palette before first paint (anti-FOUC).
+            Keep in sync with STORAGE_KEY in src/lib/theme.ts. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{if(localStorage.getItem("bhavik-studios-theme")==="forest")document.documentElement.setAttribute("data-palette","forest")}catch(e){}',
+          }}
+        />
+      </head>
       <body>
         <AppLoader />
         <CursorSpotlight />
