@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { EASE_OUT_EXPO } from "@/lib/motion";
 import { blip, isSoundEnabled, setSoundEnabled, whoosh } from "@/lib/sound";
 import { useActiveScene, type SceneId } from "@/hooks/useActiveScene";
+import { PaletteToggle } from "./PaletteToggle";
 import styles from "./topnav.module.css";
 
 const LINKS: { id: SceneId; label: string }[] = [
@@ -26,11 +27,22 @@ export function TopNav() {
   const [burning, setBurning] = useState(false);
   const [recSwapped, setRecSwapped] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const lastSceneRef = useRef<SceneId | null>(null);
 
   useEffect(() => {
     setSoundOn(isSoundEnabled());
   }, []);
+
+  // Close the mobile menu on Escape.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
   // Soft whoosh whenever the active scene changes (skipping the first read).
   useEffect(() => {
@@ -83,6 +95,56 @@ export function TopNav() {
           </a>
         ))}
       </nav>
+
+      <button
+        type="button"
+        className={styles.menuToggle}
+        aria-expanded={menuOpen}
+        aria-controls="mobile-menu"
+        aria-label={menuOpen ? "Close scene menu" : "Open scene menu"}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          {menuOpen ? (
+            <path
+              d="M5 5 L19 19 M19 5 L5 19"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          ) : (
+            <path
+              d="M3 6 H21 M3 12 H21 M3 18 H21"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          )}
+        </svg>
+      </button>
+
+      <div
+        id="mobile-menu"
+        className={styles.mobileMenu}
+        data-open={menuOpen || undefined}
+      >
+        <nav aria-label="Scenes">
+          {LINKS.map((link) => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              className={styles.mobileLink}
+              data-active={activeId === link.id}
+              aria-current={activeId === link.id ? "true" : undefined}
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <PaletteToggle />
 
       <button
         type="button"
