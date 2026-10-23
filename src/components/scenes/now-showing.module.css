@@ -110,29 +110,31 @@
 }
 
 /* six gradient palettes — fallback art when a capture is missing, and the
-   trailer screen's base (reused by TrailerModal via this module) */
+   trailer screen's base (reused by TrailerModal via this module).
+   Kept dark-toned in both site palettes so poster text stays legible;
+   hues follow the green/brass family. */
 .poster1 {
-  background: linear-gradient(160deg, #e63946 0%, #7a1620 45%, #140b0c 100%);
+  background: linear-gradient(160deg, #6f8038 0%, #37431d 45%, #11150a 100%);
 }
 
 .poster2 {
-  background: linear-gradient(200deg, #f0b429 0%, #8a5f0d 45%, #14100a 100%);
+  background: linear-gradient(200deg, #c9973b 0%, #6e4d12 45%, #171208 100%);
 }
 
 .poster3 {
-  background: linear-gradient(150deg, #f4efe6 0%, #8f887a 40%, #141310 100%);
+  background: linear-gradient(150deg, #efe9d9 0%, #8f887a 40%, #141310 100%);
 }
 
 .poster4 {
-  background: linear-gradient(215deg, #ff5a66 0%, #43111a 50%, #0d0708 100%);
+  background: linear-gradient(215deg, #7d8c45 0%, #434f23 50%, #14180b 100%);
 }
 
 .poster5 {
-  background: linear-gradient(145deg, #d97e2b 0%, #6e3a10 45%, #120c07 100%);
+  background: linear-gradient(145deg, #9a7a33 0%, #52400f 45%, #120e07 100%);
 }
 
 .poster6 {
-  background: linear-gradient(205deg, #9c2b48 0%, #3d1220 50%, #0d0709 100%);
+  background: linear-gradient(205deg, #5c6b30 0%, #2c3619 50%, #0f1208 100%);
 }
 
 /* ── card body ───────────────────────────────────────────── */
