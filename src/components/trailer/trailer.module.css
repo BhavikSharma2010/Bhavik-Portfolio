@@ -81,7 +81,7 @@
   padding: clamp(1rem, 3vw, 2rem);
   box-shadow:
     0 0 0 6px #000,
-    0 24px 60px rgba(0, 0, 0, 0.6);
+    var(--shadow-deep);
 }
 
 /* letterbox bars */

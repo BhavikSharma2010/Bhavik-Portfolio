@@ -81,7 +81,7 @@
   padding: 1rem 1.2rem;
   border-radius: var(--radius-md);
   max-width: 24rem;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--shadow-deep);
 }
 
 .commentaryPopover::backdrop {
@@ -154,7 +154,7 @@
   border-radius: inherit;
   background: radial-gradient(
     220px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(240, 180, 41, 0.08),
+    rgba(var(--gold-rgb), 0.12),
     transparent 70%
   );
   opacity: 0;
@@ -442,7 +442,7 @@
 .ticket:hover {
   transform: rotate(0deg) translateY(-4px);
   border-color: color-mix(in srgb, var(--gold) 35%, transparent);
-  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lift);
 }
 
 .ticketStub {

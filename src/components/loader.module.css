@@ -36,7 +36,7 @@
   display: grid;
   place-items: center;
   background:
-    radial-gradient(55% 45% at 50% 44%, rgba(230, 57, 70, 0.13), transparent 70%),
+    radial-gradient(55% 45% at 50% 44%, rgba(var(--accent-rgb), 0.13), transparent 70%),
     var(--bg);
 }
 
